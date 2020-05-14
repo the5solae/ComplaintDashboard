@@ -117,7 +117,7 @@ exports.complaint = async function(req,res){
      "status": req.body.status
    }
   
-  connection2.query('INSERT INTO users_complaints SET ?',complaint, function (error, results, fields) {
+  connection2.query('INSERT INTO users SET ?',complaint, function (error, results, fields) {
     if (error) {
       res.send({
         "code":400,

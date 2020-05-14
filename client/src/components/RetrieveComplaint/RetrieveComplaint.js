@@ -3,10 +3,9 @@ import axios from 'axios';
 import {API_BASE_URL} from '../../constants/apiConstants';
 import { withRouter } from "react-router-dom";
 
-
 function RetrieveComplaint(props) {
     const [state , setState] = useState({
-        data: null
+        data: {}
         })
 
     const redirectToHome = () => {
@@ -14,7 +13,8 @@ function RetrieveComplaint(props) {
         props.history.push('/home');
     }
     const user = props.userLoggedIn
-    const RetreieveInfo = async     () => {   
+
+    useEffect(() => {
         const payload={
             "email": user
         }
@@ -22,9 +22,9 @@ function RetrieveComplaint(props) {
         .then(function (response) {
             if(response.data.code === 200){
                 console.log(response.data.success)
-                setState({data: [response.data.success]})
                 props.showError(null)
-                console.log(state)
+                setState({data: response.data.success})
+                console.log(state)                
             }else{
                 props.showError("Could not Get Complaint");
             }
@@ -32,21 +32,17 @@ function RetrieveComplaint(props) {
         .catch(function (error) {
             console.log(error);
         });
-    }
-
-    useEffect(() => {
-        RetreieveInfo()
-    }, [])
+    },[])
 
     return(
         <div className="card col-12 col-lg-4 login-card mt-2 hv-center">
         <button type="button" className="btn btn-primary btn-lg btn-block" onClick={() => redirectToHome()}>Back</button>
           <ul className="list-group list-group-flush">
-            <li className="list-group-item text-left" >Title: </li>
-            <li className="list-group-item text-left">Business Unit:</li>
-            <li className="list-group-item text-left">Location: </li>
-            <li className="list-group-item text-left">Complaint Description: </li>
-            <li className="list-group-item text-left">Complaint Status: </li>
+            <li className="list-group-item text-left" ><b>Title:</b> {state.data.title}</li>
+            <li className="list-group-item text-left"><b>Business Unit:</b> {state.data.businessUnit}</li>
+            <li className="list-group-item text-left"><b>Location:</b> {state.data.location}</li>
+            <li className="list-group-item text-left"><b>Complaint Description:</b> {state.data.description}</li>
+            <li className="list-group-item text-left"><b>Complaint Status:</b> {state.data.status}</li>
         </ul>
         </div>
     )

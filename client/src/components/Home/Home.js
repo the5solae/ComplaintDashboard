@@ -23,7 +23,7 @@ function Home(props) {
         <div className="mt-2">
             <button type="button" className="btn btn-primary btn-lg btn-block" onClick={() => redirectToComplaint()}>Send a new complaint</button>
             <button type="button" className="btn btn-primary btn-lg btn-block" onClick={()=> redirectToGetComplaint()}>Retrieve previous complaint</button> 
-
+            <button type="button" className="btn btn-secondary btn-lg btn-block" onClick={()=> redirectToRegister()}>Logout</button> 
         </div>
     )
 }
